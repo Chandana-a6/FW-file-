@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firmware Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fa-solid fa-microchip"></i> FW Manager</h2>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Products</h3>
+                <ul id="product-list" class="product-list">
+                    <!-- Products will be dynamically populated -->
+                </ul>
+                <button id="btn-show-add-product" class="btn btn-outline">
+                    <i class="fa-solid fa-plus"></i> Add Product
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Add Product View -->
+            <section id="view-add-product" class="view-section hidden">
+                <div class="card">
+                    <h2>Add New Product</h2>
+                    <form id="form-add-product" class="modern-form">
+                        <div class="form-group">
+                            <label for="product-name">Product Name</label>
+                            <input type="text" id="product-name" placeholder="e.g., Smart Thermostat V2" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Product</button>
+                    </form>
+                    <div id="add-product-msg" class="msg-box"></div>
+                </div>
+            </section>
+
+            <!-- Product Detail View -->
+            <section id="view-product-detail" class="view-section hidden">
+                <div class="header-actions">
+                    <h2 id="detail-product-name">Product Details</h2>
+                    <div>
+                        <button class="btn btn-outline" style="color: var(--danger); border-color: var(--danger);" onclick="deleteCurrentProduct()">
+                            <i class="fa-solid fa-trash"></i> Delete
+                        </button>
+                        <button class="btn btn-primary" onclick="showUploadModal()" style="margin-left: 0.5rem;">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Upload Firmware
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card stats-card">
+                    <div class="stat">
+                        <span class="stat-label">Current Version</span>
+                        <span class="stat-value" id="stat-current-version">--</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Last Upload</span>
+                        <span class="stat-value" id="stat-last-upload">--</span>
+                    </div>
+                </div>
+
+                <div class="card table-card">
+                    <h3>Version History</h3>
+                    <div class="table-responsive">
+                        <table class="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>Version</th>
+                                    <th>File Name</th>
+                                    <th>Upload Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="firmware-history-body">
+                                <!-- History dynamically populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Welcome View -->
+            <section id="view-welcome" class="view-section">
+                <div class="welcome-banner">
+                    <i class="fa-solid fa-tower-broadcast hero-icon"></i>
+                    <h2>Welcome to FW Manager</h2>
+                    <p>Select a product from the sidebar or click "Add Product" to get started.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Upload Modal -->
+    <div id="upload-modal" class="modal hidden">
+        <div class="modal-content card">
+            <span class="close-btn" onclick="hideUploadModal()">&times;</span>
+            <h2>Upload Firmware</h2>
+            <form id="form-upload-firmware" class="modern-form">
+                <div class="form-group">
+                    <label for="fw-version">Version</label>
+                    <input type="text" id="fw-version" placeholder="e.g., 1.0.5" required>
+                </div>
+                <div class="form-group">
+                    <label for="fw-file">Firmware File</label>
+                    <input type="file" id="fw-file" required>
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Upload</button>
+            </form>
+            <div id="upload-msg" class="msg-box"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
